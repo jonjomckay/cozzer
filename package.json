@@ -12,7 +12,8 @@
     "react-timeago": "^4.4.0"
   },
   "devDependencies": {
-    "react-scripts": "^2.1.5"
+    "react-scripts": "^2.1.5",
+    "source-map-explorer": "^1.7.0"
   },
   "browserslist": [
     ">0.2%",
@@ -21,6 +22,7 @@
     "not op_mini all"
   ],
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
