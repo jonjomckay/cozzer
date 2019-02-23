@@ -18,7 +18,7 @@ public class ProjectManager {
     }
 
     public List<Project> listProjects() {
-        return handle.createQuery("SELECT id, slug, name FROM projects ORDER BY name")
+        return handle.createQuery("SELECT DISTINCT ON (p.id) p.id, p.name, p.slug, s.created_at AS last_submission_at FROM projects p LEFT JOIN submissions s ON s.project_id = p.id ORDER BY p.id, p.name, s.created_at DESC")
                 .mapToBean(Project.class)
                 .list();
     }
