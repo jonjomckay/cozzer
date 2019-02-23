@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TimeAgo from "react-timeago";
+import { Link } from "react-router-dom";
 
 export default class SubmissionListItem extends Component {
     render() {
@@ -8,7 +9,9 @@ export default class SubmissionListItem extends Component {
         return (
             <tr>
                 <td>
-                    { submission.externalKey || submission.id }
+                    <Link to={ '/projects/' + this.props.project + '/submissions/' + submission.id }>
+                        { submission.externalKey || submission.id }
+                    </Link>
                 </td>
                 <td className="text-right">
                     <TimeAgo date={ submission.createdAt }/>

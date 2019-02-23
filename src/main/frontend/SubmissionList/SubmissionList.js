@@ -17,7 +17,7 @@ export default class SubmissionList extends Component {
 
     render() {
         const submissions = this.state.submissions
-            .map(submission => <SubmissionListItem key={ submission.id } submission={ submission } />);
+            .map(submission => <SubmissionListItem key={ submission.id } project={ this.props.project } submission={ submission } />);
 
         return (
             <Table bordered={ false }>

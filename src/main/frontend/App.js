@@ -5,6 +5,7 @@ import ProjectList from "./ProjectList";
 import Container from "react-bootstrap/Container";
 import Project from "./Project";
 import TestSuite from "./TestSuite";
+import Submission from "./Submission/Submission";
 
 class App extends Component {
     render() {
@@ -16,6 +17,7 @@ class App extends Component {
                     <Container>
                         <Route exact path="/projects" component={ ProjectList } />
                         <Route exact path="/projects/:id" component={ Project } />
+                        <Route exact path="/projects/:id/submissions/:submission" component={ Submission } />
                         <Route exact path="/projects/:id/tests/suites/:suite" component={ TestSuite } />
                     </Container>
                 </div>
