@@ -9,6 +9,7 @@ import com.jonjomckay.testmate.submissions.SubmissionController;
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.flyway.Flywaydb;
+import org.jooby.frontend.Yarn;
 import org.jooby.jdbc.Jdbc;
 import org.jooby.jdbi.Jdbi3;
 import org.jooby.json.Jackson;
@@ -28,6 +29,12 @@ public class App extends Jooby {
                 .transactionPerRequest()
                 .doWith((jdbi, config) -> jdbi.setSqlLogger(new Slf4jLogger())));
         use(new Flywaydb());
+
+        on("dev", () -> {
+            use(new Yarn("v11.10.0", "v1.13.0")
+                    .onStart(yarn -> yarn.execute("start"))
+            );
+        });
 
         err((req, rsp, ex) -> {
             LOGGER.error(ex.getCause().getMessage(), ex.getCause());

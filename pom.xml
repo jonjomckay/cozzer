@@ -38,6 +38,10 @@
       <artifactId>jooby-flyway</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jooby</groupId>
+      <artifactId>jooby-frontend</artifactId>
+    </dependency>
+    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
