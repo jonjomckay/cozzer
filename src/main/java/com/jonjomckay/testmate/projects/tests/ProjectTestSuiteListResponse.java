@@ -6,6 +6,7 @@ public class ProjectTestSuiteListResponse {
     private UUID id;
     private float duration;
     private String name;
+    private long numberOfTestCases;
 
     public UUID getId() {
         return id;
@@ -29,5 +30,13 @@ public class ProjectTestSuiteListResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getNumberOfTestCases() {
+        return numberOfTestCases;
+    }
+
+    public void setNumberOfTestCases(long numberOfTestCases) {
+        this.numberOfTestCases = numberOfTestCases;
     }
 }

@@ -19,7 +19,7 @@ public class ProjectTestManager {
     }
 
     public List<ProjectTestSuiteListResponse> listProjectTestSuites(UUID project) {
-        return handle.createQuery("SELECT id, duration, name FROM results_test_suites WHERE project_id = :id ORDER BY name")
+        return handle.createQuery("SELECT s.id, s.duration, s.name, COUNT(c.id) number_of_test_cases FROM results_test_suites s LEFT JOIN results_test_cases c ON c.suite_id = s.id WHERE s.project_id = :id GROUP BY s.id ORDER BY s.name")
                 .bind("id", project)
                 .mapToBean(ProjectTestSuiteListResponse.class)
                 .list();
