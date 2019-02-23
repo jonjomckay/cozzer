@@ -1,14 +1,12 @@
 package com.jonjomckay.testmate.submissions;
 
 import org.jooby.Request;
-import org.jooby.Upload;
 import org.jooby.mvc.Consumes;
 import org.jooby.mvc.POST;
 import org.jooby.mvc.Path;
 import org.jooby.mvc.Produces;
 
 import javax.inject.Inject;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -32,11 +30,7 @@ public class SubmissionController {
     @Path("junit")
     @POST
     public void submitJunitResults(UUID id, Request request) throws IOException {
-        for (Upload result : request.files("results")) {
-            manager.submitJunitResults(id, new FileInputStream(result.file()));
-
-            result.close();
-        }
+        manager.submitJunitResults(id, request.files("results"));
     }
 
     @Path("opencover")
