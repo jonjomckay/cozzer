@@ -1,11 +1,7 @@
 package com.jonjomckay.testmate.submissions;
 
-import com.jonjomckay.testmate.submissions.tests.TestCase;
-import com.jonjomckay.testmate.submissions.tests.TestSuite;
-import org.apache.maven.plugin.surefire.log.api.ConsoleLoggerDecorator;
-import org.apache.maven.plugins.surefire.report.ReportTestCase;
-import org.apache.maven.plugins.surefire.report.ReportTestSuite;
-import org.apache.maven.plugins.surefire.report.TestSuiteXmlParser;
+import com.jonjomckay.testmate.submissions.tests.TestReportParserFactory;
+import com.jonjomckay.testmate.submissions.tests.TestReportType;
 import org.jdbi.v3.core.Handle;
 import org.jooby.Upload;
 import org.slf4j.Logger;
@@ -16,7 +12,6 @@ import org.zalando.problem.Status;
 import javax.inject.Inject;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -25,47 +20,46 @@ public class SubmissionManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(SubmissionManager.class);
 
     private final Handle handle;
+    private final TestReportParserFactory testReportParserFactory;
 
     @Inject
-    public SubmissionManager(Handle handle) {
+    public SubmissionManager(Handle handle, TestReportParserFactory testReportParserFactory) {
         this.handle = handle;
+        this.testReportParserFactory = testReportParserFactory;
     }
 
-    UUID findSubmissionProject(UUID id) {
-        var project = handle.createQuery("SELECT project_id FROM submissions WHERE id = :id")
+    void assertSubmissionExists(UUID id) {
+        var exists = handle.createQuery("SELECT EXISTS (SELECT 1 FROM submissions WHERE id = :id)")
                 .bind("id", id)
-                .mapTo(UUID.class)
-                .findFirst();
+                .mapTo(boolean.class)
+                .findOnly();
 
-        return project
-                .orElseThrow(() -> Problem.valueOf(Status.NOT_FOUND, "No submission could be found with that ID"));
+        if (exists == false) {
+            throw Problem.valueOf(Status.NOT_FOUND, "No submission could be found with that ID");
+        }
     }
 
     // TODO: Extract this into some interface or something, so we can ensure we're ending up with a consistent format
     public void submitJunitResults(UUID submission, List<Upload> results) {
-        var project = findSubmissionProject(submission);
+        assertSubmissionExists(submission);
 
-        var parser = new TestSuiteXmlParser(new ConsoleLoggerDecorator(LOGGER));
+        var reportParser = testReportParserFactory.create(TestReportType.Surefire);
 
         var suites = results.stream()
                 .flatMap(upload -> {
-                    List<ReportTestSuite> testSuites;
                     try {
-                        testSuites = parser.parse(new InputStreamReader(new FileInputStream(upload.file())));
-                    } catch (Exception e) {
-                        LOGGER.error("Unable to parse the incoming JUnit report", e);
+                        return reportParser.parse(new FileInputStream(upload.file()));
+                    } catch (IOException e) {
+                        LOGGER.error("Unable to parse the test results", e);
 
-                        throw new RuntimeException("Unable to parse the incoming JUnit report", e);
+                        throw new RuntimeException(e);
                     }
-
-                    return testSuites.stream().map(SubmissionManager::createTestSuite);
                 })
                 .collect(Collectors.toList());
 
         for (var suite : suites) {
-            var id = handle.createQuery("INSERT INTO results_test_suites (id, project_id, submission_id, name, duration) VALUES (:id, :project, :submission, :name, :duration) ON CONFLICT (submission_id, name) DO UPDATE SET duration = :duration RETURNING id")
+            var id = handle.createQuery("INSERT INTO results_test_suites (id, submission_id, name, duration) VALUES (:id, :submission, :name, :duration) ON CONFLICT (submission_id, name) DO UPDATE SET duration = :duration RETURNING id")
                     .bind("id", UUID.randomUUID())
-                    .bind("project", project)
                     .bind("submission", submission)
                     .bind("name", suite.getName())
                     .bind("duration", suite.getDuration())
@@ -99,26 +93,5 @@ public class SubmissionManager {
                 LOGGER.error("Unable to close the upload {}", upload.name(), e);
             }
         }
-    }
-
-    private static TestSuite createTestSuite(ReportTestSuite suite) {
-        var testCases = suite.getTestCases().stream()
-                .map(SubmissionManager::createTestCase)
-                .collect(Collectors.toList());
-
-        return new TestSuite(suite.getFullClassName(), suite.getTimeElapsed(), testCases);
-    }
-
-    private static TestCase createTestCase(ReportTestCase reportTestCase) {
-        TestCase testCase = new TestCase();
-        testCase.setDuration(reportTestCase.getTime());
-        testCase.setErrored(reportTestCase.hasError());
-        testCase.setFailed(reportTestCase.hasFailure());
-        testCase.setFailureMessage(reportTestCase.getFailureMessage());
-        testCase.setName(reportTestCase.getName());
-        testCase.setSkipped(reportTestCase.hasSkipped());
-        testCase.setSuccessful(reportTestCase.isSuccessful());
-
-        return testCase;
     }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TestSuiteList from "../TestSuiteList";
 import SubmissionList from "../SubmissionList";
 
 export default class Project extends Component {
@@ -29,10 +28,6 @@ export default class Project extends Component {
                 <h3>Submissions</h3>
 
                 <SubmissionList project={ project.id } />
-
-                <h3>Test Suites</h3>
-
-                <TestSuiteList project={ project.id } />
             </div>
         )
     }

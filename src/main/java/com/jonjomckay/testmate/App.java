@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.jonjomckay.testmate.jdbi.Slf4jLogger;
 import com.jonjomckay.testmate.projects.ProjectController;
 import com.jonjomckay.testmate.projects.submissions.ProjectSubmissionController;
-import com.jonjomckay.testmate.projects.tests.ProjectTestController;
+import com.jonjomckay.testmate.projects.submissions.tests.SubmissionTestController;
 import com.jonjomckay.testmate.submissions.SubmissionController;
 import org.jooby.Jooby;
 import org.jooby.MediaType;
@@ -72,7 +72,7 @@ public class App extends Jooby {
 
         use(ProjectController.class);
         use(ProjectSubmissionController.class);
-        use(ProjectTestController.class);
+        use(SubmissionTestController.class);
         use(SubmissionController.class);
     }
 

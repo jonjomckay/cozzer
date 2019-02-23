@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TestSuiteListItem from "./TestSuiteListItem";
 import Table from "react-bootstrap/Table";
 
-export default class TestSuiteList extends Component {
+class TestSuiteList extends Component {
     state = {
         suites: []
     };
 
     componentDidMount() {
-        fetch('/api/1/projects/' + this.props.project + '/tests/suites')
+        fetch('/api/1/projects/' + this.props.project + '/submissions/' + this.props.submission + '/tests/suites')
             .then(response => response.json())
             .then(response => this.setState({
                 suites: response
@@ -34,3 +35,10 @@ export default class TestSuiteList extends Component {
         )
     }
 }
+
+TestSuiteList.propTypes = {
+    project: PropTypes.string.isRequired,
+    submission: PropTypes.string.isRequired
+};
+
+export default TestSuiteList;

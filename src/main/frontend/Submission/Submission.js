@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TimeAgo from "react-timeago/lib/index";
+import TestSuiteList from "../TestSuiteList";
 
 export default class Submission extends Component {
     state = {
@@ -30,6 +31,8 @@ export default class Submission extends Component {
                 <small>
                     Submitted <TimeAgo date={ submission.createdAt } />
                 </small>
+
+                <TestSuiteList project={ this.props.match.params.id } submission={ this.props.match.params.submission } />
             </div>
         )
     }

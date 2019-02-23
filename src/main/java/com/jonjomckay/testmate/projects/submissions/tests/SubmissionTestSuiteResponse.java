@@ -1,10 +1,10 @@
-package com.jonjomckay.testmate.projects.tests;
+package com.jonjomckay.testmate.projects.submissions.tests;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ProjectTestSuiteResponse {
+public class SubmissionTestSuiteResponse {
     private UUID id;
     private float duration;
     private String name;
