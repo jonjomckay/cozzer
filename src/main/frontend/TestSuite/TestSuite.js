@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import classNames from 'classnames';
 import Table from "react-bootstrap/Table";
 
@@ -9,9 +8,10 @@ export default class TestSuite extends Component {
     };
 
     componentDidMount() {
-        axios.get('/api/1/projects/' + this.props.match.params.id + '/tests/suites/' + this.props.match.params.suite)
+        fetch('/api/1/projects/' + this.props.match.params.id + '/tests/suites/' + this.props.match.params.suite)
+            .then(response => response.json())
             .then(response => this.setState({
-                suite: response.data
+                suite: response
             }));
     }
 

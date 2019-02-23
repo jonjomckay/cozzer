@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import SubmissionListItem from "./SubmissionListItem";
 import Table from "react-bootstrap/Table";
 
@@ -9,9 +8,10 @@ export default class SubmissionList extends Component {
     };
 
     componentDidMount() {
-        axios.get('/api/1/projects/' + this.props.project + '/submissions')
+        fetch('/api/1/projects/' + this.props.project + '/submissions')
+            .then(response => response.json())
             .then(response => this.setState({
-                submissions: response.data
+                submissions: response
             }));
     }
 

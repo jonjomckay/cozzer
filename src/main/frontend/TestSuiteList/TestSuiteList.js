@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import TestSuiteListItem from "./TestSuiteListItem";
 import Table from "react-bootstrap/Table";
 
@@ -9,9 +8,10 @@ export default class TestSuiteList extends Component {
     };
 
     componentDidMount() {
-        axios.get('/api/1/projects/' + this.props.project + '/tests/suites')
+        fetch('/api/1/projects/' + this.props.project + '/tests/suites')
+            .then(response => response.json())
             .then(response => this.setState({
-                suites: response.data
+                suites: response
             }));
     }
 

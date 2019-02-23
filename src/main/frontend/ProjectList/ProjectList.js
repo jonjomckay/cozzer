@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import ProjectListItem from "./ProjectListItem";
 
 export default class ProjectList extends Component {
@@ -8,9 +7,10 @@ export default class ProjectList extends Component {
     };
 
     componentDidMount() {
-        axios.get('/api/1/projects')
+        fetch('/api/1/projects')
+            .then(response => response.json())
             .then(response => this.setState({
-                projects: response.data
+                projects: response
             }));
     }
 

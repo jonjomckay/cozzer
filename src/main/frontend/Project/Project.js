@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import TestSuiteList from "../TestSuiteList";
 import SubmissionList from "../SubmissionList";
 
@@ -9,9 +8,10 @@ export default class Project extends Component {
     };
 
     componentDidMount() {
-        axios.get(`/api/1/projects/${ this.props.match.params.id }`)
+        fetch(`/api/1/projects/${ this.props.match.params.id }`)
+            .then(response => response.json())
             .then(response => this.setState({
-                project: response.data
+                project: response
             }));
     }
 
