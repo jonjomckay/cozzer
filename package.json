@@ -1,5 +1,5 @@
 {
-  "name": "testmate",
+  "name": "cozzer",
   "proxy": "http://localhost:8080",
   "dependencies": {
     "bootstrap": "^4.3.1",

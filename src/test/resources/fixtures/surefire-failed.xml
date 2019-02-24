@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.jonjomckay.testmate.junit.FailingTest" time="0.7" tests="1" errors="0" skipped="0" failures="1">
-    <testcase name="com.jonjomckay.testmate.junit.FailingTest" classname="com.jonjomckay.testmate.junit.FailingTest" time="0.7">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.jonjomckay.cozzer.junit.FailingTest" time="0.7" tests="1" errors="0" skipped="0" failures="1">
+    <testcase name="com.jonjomckay.cozzer.junit.FailingTest" classname="com.jonjomckay.cozzer.junit.FailingTest" time="0.7">
         <failure type="A failure type" message="A failure message" time="0.7" />
     </testcase>
 </testsuite>

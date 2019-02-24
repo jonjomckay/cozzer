@@ -10,13 +10,13 @@
     <version>1.6.0</version>
   </parent>
 
-  <artifactId>testmate</artifactId>
+  <artifactId>cozzer</artifactId>
   <groupId>com.jonjomckay</groupId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
     <jooby.version>1.6.0</jooby.version>
-    <application.class>com.jonjomckay.testmate.App</application.class>
+    <application.class>com.jonjomckay.cozzer.App</application.class>
     <problem.version>0.22.0</problem.version>
   </properties>
 

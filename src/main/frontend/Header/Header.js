@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
     return (
         <Navbar className="bg-white mb-3 border-bottom border-light" expand="lg" sticky="top" style={{ marginBottom: '1rem'}}>
-            <NavbarBrand>Testmate</NavbarBrand>
+            <NavbarBrand>Cozzer</NavbarBrand>
             <NavbarToggle aria-controls="navigation-main" />
 
             <NavbarCollapse id="navigation-main">
