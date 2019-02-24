@@ -2,6 +2,8 @@ Cozzer
 ======
 
 [![Build Status](https://travis-ci.org/jonjomckay/cozzer.svg?branch=master)](https://travis-ci.org/jonjomckay/cozzer)
+![Docker Build Status](https://img.shields.io/docker/build/jonjomckay/cozzer.svg)
+![MicroBadger Size](https://img.shields.io/microbadger/image-size/jonjomckay/cozzer.svg)
 
 Cozzer is one of those tools that you can use to store and analyze results from your build system, including:
 
