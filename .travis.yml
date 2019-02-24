@@ -1,0 +1,18 @@
+language: java
+
+services:
+  - docker
+
+cache:
+  directories:
+    - $HOME/.m2
+
+jdk:
+  - oraclejdk11
+  - openjdk11
+
+before_install:
+  - docker-compose up -d
+
+after_script:
+  - docker-compose down
