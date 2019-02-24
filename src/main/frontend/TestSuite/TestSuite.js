@@ -8,7 +8,9 @@ export default class TestSuite extends Component {
     };
 
     componentDidMount() {
-        fetch('/api/1/projects/' + this.props.match.params.id + '/tests/suites/' + this.props.match.params.suite)
+        const params = this.props.match.params;
+
+        fetch('/api/1/projects/' + params.id + '/submissions/' + params.submission + '/tests/suites/' + params.suite)
             .then(response => response.json())
             .then(response => this.setState({
                 suite: response
@@ -23,12 +25,14 @@ export default class TestSuite extends Component {
         }
 
         const cases = this.state.suite.testCases.map(testCase => {
+            // Make sure the name is coloured in a way that shows the status of the test case
             const nameClasses = classNames({
                 'text-danger': testCase.failed || testCase.errored,
                 'text-success': testCase.successful,
                 'text-muted': testCase.skipped
             });
 
+            // Colour the duration based on suitable test case lengths
             const durationClasses = classNames({
                 'text-danger': testCase.duration > 10,
                 'text-warning': testCase.duration > 5

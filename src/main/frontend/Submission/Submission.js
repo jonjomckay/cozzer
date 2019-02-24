@@ -32,6 +32,8 @@ export default class Submission extends Component {
                     Submitted <TimeAgo date={ submission.createdAt } />
                 </small>
 
+                <h3>Test Suites</h3>
+
                 <TestSuiteList project={ this.props.match.params.id } submission={ this.props.match.params.submission } />
             </div>
         )

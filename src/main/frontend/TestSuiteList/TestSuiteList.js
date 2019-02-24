@@ -17,13 +17,24 @@ class TestSuiteList extends Component {
     }
 
     render() {
-        const rows = this.state.suites.map(suite => <TestSuiteListItem key={ suite.id } project={ this.props.project } suite={ suite } />);
+        const itemProps = {
+            project: this.props.project,
+            submission: this.props.submission
+        };
+
+        const rows = this.state.suites
+            .map(suite => <TestSuiteListItem { ...itemProps } key={ suite.id } suite={ suite } />);
+
+        if (rows.length === 0) {
+            return <p>No suites submitted yet!</p>
+        }
 
         return (
             <Table bordered={ false }>
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Duration</th>
                     <th>Cases</th>
                 </tr>
                 </thead>

@@ -18,7 +18,7 @@ class App extends Component {
                         <Route exact path="/projects" component={ ProjectList } />
                         <Route exact path="/projects/:id" component={ Project } />
                         <Route exact path="/projects/:id/submissions/:submission" component={ Submission } />
-                        <Route exact path="/projects/:id/tests/suites/:suite" component={ TestSuite } />
+                        <Route exact path="/projects/:id/submissions/:submission/tests/suites/:suite" component={ TestSuite } />
                     </Container>
                 </div>
             </Router>

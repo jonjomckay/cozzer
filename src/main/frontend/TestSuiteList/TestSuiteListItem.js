@@ -9,10 +9,11 @@ class TestSuiteListItem extends Component {
         return (
             <tr>
                 <td>
-                    <Link to={ '/projects/' + this.props.project + '/tests/suites/' + suite.id }>
+                    <Link to={ '/projects/' + this.props.project + '/submissions/' + this.props.submission + '/tests/suites/' + suite.id }>
                         { suite.name }
                     </Link>
                 </td>
+                <td>{ suite.duration }</td>
                 <td>{ suite.numberOfTestCases }</td>
             </tr>
         )
@@ -20,7 +21,10 @@ class TestSuiteListItem extends Component {
 }
 
 TestSuiteListItem.propTypes = {
+    project: PropTypes.string.isRequired,
+    submission: PropTypes.string.isRequired,
     suite: PropTypes.shape({
+        duration: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         numberOfTestCases: PropTypes.number.isRequired
     }).isRequired
