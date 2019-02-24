@@ -26,3 +26,6 @@ buildNumber.properties
 node/
 node_modules/
 build/
+public/
+!public/index.html
+!public/manifest.json

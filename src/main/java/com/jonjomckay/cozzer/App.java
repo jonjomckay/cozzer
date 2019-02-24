@@ -10,6 +10,7 @@ import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.flyway.Flywaydb;
 import org.jooby.frontend.Yarn;
+import org.jooby.handlers.AssetHandler;
 import org.jooby.jdbc.Jdbc;
 import org.jooby.jdbi.Jdbi3;
 import org.jooby.json.Jackson;
@@ -74,10 +75,14 @@ public class App extends Jooby {
                     .send(problem);
         });
 
+        assets("/", "index.html");
+        assets("/static/**");
+
         use(ProjectController.class);
         use(ProjectSubmissionController.class);
         use(SubmissionTestController.class);
         use(SubmissionController.class);
+        use("GET", "*", new AssetHandler("index.html"));
     }
 
     public static void main(final String[] args) {
