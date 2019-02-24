@@ -9,19 +9,6 @@ public class TestCase {
     private boolean skipped;
     private boolean successful;
 
-    public TestCase() {
-    }
-
-    public TestCase(float duration, boolean errored, boolean failed, String failureMessage, String name, boolean skipped, boolean successful) {
-        this.duration = duration;
-        this.errored = errored;
-        this.failed = failed;
-        this.failureMessage = failureMessage;
-        this.name = name;
-        this.skipped = skipped;
-        this.successful = successful;
-    }
-
     public float getDuration() {
         return duration;
     }

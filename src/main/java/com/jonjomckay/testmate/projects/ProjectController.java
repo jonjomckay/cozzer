@@ -35,8 +35,8 @@ public class ProjectController {
             throw Problem.valueOf(Status.BAD_REQUEST, "No project slug was given");
         }
 
-        if (request.getSlug().matches("^[a-zA-Z0-9+-]*$") == false) {
-            throw Problem.valueOf(Status.BAD_REQUEST, "The project slug can only contain alphanumeric characters and hyphens");
+        if (request.getSlug().matches("^[a-z0-9+-]*$") == false) {
+            throw Problem.valueOf(Status.BAD_REQUEST, "The project slug can only contain lowercase alphanumeric characters and hyphens");
         }
 
         if (request.getSlug().startsWith("-") || request.getSlug().endsWith("-")) {

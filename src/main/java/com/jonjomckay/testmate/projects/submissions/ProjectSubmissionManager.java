@@ -23,6 +23,16 @@ public class ProjectSubmissionManager {
             throw Problem.valueOf(Status.BAD_REQUEST, "An external key is required to create a submission");
         }
 
+        var exists = handle.createQuery("SELECT EXISTS (SELECT 1 FROM submissions WHERE project_id = :project AND external_key = :externalKey)")
+                .bind("project", project)
+                .bind("externalKey", request.getExternalKey())
+                .mapTo(boolean.class)
+                .findOnly();
+
+        if (exists) {
+            throw Problem.valueOf(Status.CONFLICT, "A submission already exists with that external key");
+        }
+
         // Generate a submission ID
         var id = UUID.randomUUID();
 

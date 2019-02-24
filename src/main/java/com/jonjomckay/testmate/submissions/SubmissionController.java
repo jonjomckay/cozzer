@@ -22,19 +22,19 @@ public class SubmissionController {
         this.manager = manager;
     }
 
-    @Path("metrics")
-    public void submitCustomMetrics(UUID id) {
-        // If a metric already exists, overwrite it
-    }
+//    @Path("metrics")
+//    public void submitCustomMetrics(UUID id) {
+//        // If a metric already exists, overwrite it
+//    }
 
-    @Path("junit")
+    @Path("surefire")
     @POST
-    public void submitJunitResults(UUID id, Request request) throws IOException {
-        manager.submitJunitResults(id, request.files("results"));
+    public void submitSurefireResults(UUID id, Request request) throws IOException {
+        manager.submitSurefireResults(id, request.files("results"));
     }
 
-    @Path("opencover")
-    public void submitOpencoverResults(UUID id) {
-        // Merge incoming results with existing results
-    }
+//    @Path("opencover")
+//    public void submitOpencoverResults(UUID id) {
+//        // Merge incoming results with existing results
+//    }
 }

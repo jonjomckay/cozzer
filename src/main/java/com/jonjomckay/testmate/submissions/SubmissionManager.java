@@ -40,7 +40,7 @@ public class SubmissionManager {
     }
 
     // TODO: Extract this into some interface or something, so we can ensure we're ending up with a consistent format
-    public void submitJunitResults(UUID submission, List<Upload> results) {
+    public void submitSurefireResults(UUID submission, List<Upload> results) {
         assertSubmissionExists(submission);
 
         var reportParser = testReportParserFactory.create(TestReportType.Surefire);

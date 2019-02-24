@@ -9,6 +9,10 @@ public class TestReportParserFactory {
     private final static Logger LOGGER = LoggerFactory.getLogger(TestReportParserFactory.class);
 
     public TestReportParser create(TestReportType type) {
+        if (type == null) {
+            throw new RuntimeException("No test report type was given");
+        }
+
         switch (type) {
             case Surefire:
                 return new SurefireReportParser(new TestSuiteXmlParser(new ConsoleLoggerDecorator(LOGGER)));

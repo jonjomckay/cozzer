@@ -38,10 +38,6 @@ public class SubmissionTestSuiteResponse {
         return testCases;
     }
 
-    public void setTestCases(List<TestCase> testCases) {
-        this.testCases = testCases;
-    }
-
     public static class TestCase {
         private float duration;
         private boolean errored;

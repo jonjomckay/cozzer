@@ -37,12 +37,16 @@ public class App extends Jooby {
         });
 
         err((req, rsp, ex) -> {
-            LOGGER.error(ex.getCause().getMessage(), ex.getCause());
+            var cause = ex.getCause() == null
+                    ? ex
+                    : ex.getCause();
+
+            LOGGER.error(cause.getMessage(), cause);
 
             ThrowableProblem problem;
 
-            if (ex.getCause() instanceof ThrowableProblem) {
-                problem = (ThrowableProblem) ex.getCause();
+            if (cause instanceof ThrowableProblem) {
+                problem = (ThrowableProblem) cause;
 
                 if (problem.getStatus() == null) {
                     rsp.status(ex.statusCode());
@@ -51,7 +55,7 @@ public class App extends Jooby {
                 }
             } else {
                 problem = Problem.builder()
-                        .withDetail(ex.getCause().getMessage())
+                        .withDetail(cause.getMessage())
                         .withStatus(new StatusType() {
                             @Override
                             public int getStatusCode() {

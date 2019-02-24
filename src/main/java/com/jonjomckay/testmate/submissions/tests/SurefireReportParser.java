@@ -5,6 +5,8 @@ import org.apache.maven.plugins.surefire.report.ReportTestSuite;
 import org.apache.maven.plugins.surefire.report.TestSuiteXmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +31,7 @@ public class SurefireReportParser implements TestReportParser {
         } catch (Exception e) {
             LOGGER.error("Unable to parse the incoming Surefire report", e);
 
-            throw new RuntimeException("Unable to parse the incoming Surefire report", e);
+            throw Problem.valueOf(Status.BAD_REQUEST, "Unable to parse the incoming Surefire report");
         }
 
         return testSuites.stream().map(SurefireReportParser::createTestSuite);
